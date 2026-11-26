@@ -4,6 +4,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 import { TodoContext,TodoProvider } from './Context/Context'
+import TodoForm from './Component/TodoForm'
+import TodoItem from './Component/TodoItem'
 
 function App() {
 const[todos,setTodo]=useState([])
@@ -13,10 +15,10 @@ const addTodo=(todo)=>{
 const updateTodo=(id,todo)=>{
     setTodo((prev) => prev.map((prevtodo)=>(prevtodo.id===id ? todo : prevtodo )))
 }
-const deletetodo=(id)=>{
+const deleteTodo=(id)=>{
     setTodo((prev)=>prev.filter((todo)=>(todo.id!=id)))
 }
-const togglecomplete=(id)=>{
+const toggleComplete=(id)=>{
     setTodo((prev)=>prev.map((prevtodo)=>(prevtodo.id===id?{...prevtodo,cpmpleted:!prevtodo.completed}:prevtodo)))
 }
 useEffect(()=>{
@@ -39,9 +41,17 @@ useEffect(()=>{
                     <h1 className="text-2xl font-bold text-center mb-8 mt-2">Manage Your Todos</h1>
                     <div className="mb-4">
                         {/* Todo form goes here */} 
+                        <TodoForm/>
                     </div>
                     <div className="flex flex-wrap gap-y-3">
                         {/*Loop and Add TodoItem here */}
+                        {todos.map((todo)=>(
+                            <div key={todo.id} className='w-full'>
+                                <TodoItem todo={todo}/>
+                            </div>
+                        ))}
+
+
                     </div>
                 </div>
             </div>
