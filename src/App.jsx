@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
@@ -19,6 +19,19 @@ const deletetodo=(id)=>{
 const togglecomplete=(id)=>{
     setTodo((prev)=>prev.map((prevtodo)=>(prevtodo.id===id?{...prevtodo,cpmpleted:!prevtodo.completed}:prevtodo)))
 }
+useEffect(()=>{
+    const todos=JSON.parse(localStorage.getItem("todos"))
+    if(todos && todos.length>0){
+        setTodo(todos);
+    }
+},[])
+useEffect(()=>{
+    localStorage.setItem("todos",JSON.stringify(todos))
+},[todos])
+  
+
+
+
   return (
     <TodoProvider value={{ todos, addTodo, updateTodo, deleteTodo, toggleComplete }}>
 <div className="bg-[#172842] min-h-screen py-8">
